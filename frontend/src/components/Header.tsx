@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
             </div>
             <div className="hidden md:block"></div>
             <a
-                href="https://wa.me/SEU_NUMERO_REAL"
+                href="https://wa.me/5542999839219"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 bg-nebula-cyan/10 hover:bg-nebula-cyan/20 border border-nebula-cyan/50 text-nebula-cyan px-5 py-2 rounded-full font-orbit text-xs font-bold tracking-wider transition hover:shadow-neon"

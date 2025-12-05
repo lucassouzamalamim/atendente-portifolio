@@ -1,6 +1,8 @@
 import React from 'react';
 import { Layers, Cpu, Zap } from 'lucide-react';
 
+import avatarImg from '../assets/avatar.jpg';
+
 interface SidebarProps {
     onAction: (action: string) => void;
 }
@@ -13,8 +15,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onAction }) => {
                     <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-tr from-nebula-purple to-nebula-cyan rounded-full blur animate-pulse-slow group-hover:blur-md transition"></div>
                         <img
-                            src="https://api.dicebear.com/7.x/avataaars/svg?seed=LucasDev&backgroundColor=transparent"
-                            className="w-14 h-14 relative rounded-full border-2 border-white/20 bg-void-950"
+                            src={avatarImg}
+                            className="w-14 h-14 relative rounded-full border-2 border-white/20 bg-void-950 object-cover"
                             alt="Avatar"
                         />
                     </div>
