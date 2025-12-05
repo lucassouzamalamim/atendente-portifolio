@@ -49,8 +49,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({ inputAction, onActionCon
         setIsLoading(true);
         scrollToBottom();
 
+        // Use environment variable for API URL, fallback to localhost for dev
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+
         try {
-            const response = await fetch('http://localhost:8080/api/chat', {
+            const response = await fetch(`${apiUrl}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text }),
