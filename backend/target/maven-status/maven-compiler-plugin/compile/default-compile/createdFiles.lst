@@ -1,0 +1,5 @@
+com\lucasdev\portfolio\repository\MessageRepository.class
+com\lucasdev\portfolio\model\Message$Sender.class
+com\lucasdev\portfolio\model\ChatRequest.class
+com\lucasdev\portfolio\model\Message.class
+com\lucasdev\portfolio\PortfolioApplication.class

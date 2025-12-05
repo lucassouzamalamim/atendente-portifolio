@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Dev | Arquiteto de Software</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                    orbit: ['Orbitron', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        void: { 800: '#1e1b2e', 900: '#0f0c19', 950: '#05040a' }, // Fundo Profundo
+                        nebula: {
+                            purple: '#a855f7', // Roxo
+                            blue: '#3b82f6',   // Azul
+                            cyan: '#06b6d4',   // Ciano
+                            glow: '#00f0ff'    // Neon
+                        },
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    boxShadow: {
+                        'cosmic': '0 0 15px rgba(168, 85, 247, 0.3), 0 0 30px rgba(6, 182, 212, 0.1)',
+                        'neon': '0 0 5px #06b6d4, 0 0 10px #06b6d4',
+                    },
+                    backgroundImage: {
+                        'cosmic-gradient': 'linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(6,182,212,0.1) 100%)',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Scrollbar Stealth */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* Estilos Markdown */
+        .prose strong {
+            color: #00f0ff;
+            font-weight: 700;
+        }
+
+        .prose ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .prose li::before {
+            content: "▹";
+            color: #a855f7;
+            margin-right: 8px;
+        }
+
+        .prose p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+            color: #e2e8f0;
+        }
+
+        /* Animação de Estrelas (CSS Puro) */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 100px 200px #FFF, 400px 500px #FFF, 700px 100px #FFF, 900px 800px #FFF, 200px 600px #FFF;
+            animation: animStar 100s linear infinite;
+        }
+
+        .stars2 {
+            width: 2px;
+            height: 2px;
+            background: transparent;
+            box-shadow: 200px 300px #FFF, 500px 100px #FFF, 800px 600px #FFF;
+            animation: animStar 150s linear infinite;
+        }
+
+        @keyframes animStar {
+            from {
+                transform: translateY(0px);
+            }
+
+            to {
+                transform: translateY(-2000px);
+            }
+        }
+
+        /* Vidro Holográfico */
+        .glass-panel {
+            background: rgba(15, 12, 25, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-void-950 text-slate-200 font-sans h-screen overflow-hidden selection:bg-nebula-cyan selection:text-void-950 relative">
+
+    <div
+        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-void-800 via-void-950 to-void-950 -z-20">
+    </div>
+    <div
+        class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-nebula-purple/20 via-transparent to-transparent -z-10">
+    </div>
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+    </div>
+
+    <div id="app" class="flex h-full relative z-10">
+
+        <aside
+            class="w-[300px] glass-panel border-r-0 border-r border-white/5 flex flex-col hidden md:flex relative z-20">
+            <div class="p-8 border-b border-white/5">
+                <div class="flex items-center gap-4 group cursor-default">
+                    <div class="relative">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-nebula-purple to-nebula-cyan rounded-full blur animate-pulse-slow group-hover:blur-md transition">
+                        </div>
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=LucasDev&backgroundColor=transparent"
+                            class="w-14 h-14 relative rounded-full border-2 border-white/20 bg-void-950">
+                    </div>
+                    <div>
+                        <h1
+                            class="font-bold text-white font-orbit tracking-wider text-lg group-hover:text-nebula-glow transition">
+                            LUCAS DEV</h1>
+                        <p class="text-[10px] text-nebula-cyan font-orbit tracking-[0.2em] uppercase">Software Architect
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6 space-y-4 font-orbit">
+                <div class="text-[10px] text-slate-500 uppercase tracking-widest pl-2 mb-2">Painel de Controle</div>
+
+                <button @click="triggerAction('portfolio')"
+                    class="w-full text-left p-4 rounded-xl bg-white/5 hover:bg-nebula-blue/20 border border-white/5 hover:border-nebula-cyan/50 transition-all group flex items-center gap-3">
+                    <i data-lucide="layers"
+                        class="w-5 h-5 text-nebula-purple group-hover:text-nebula-cyan transition"></i>
+                    <span class="text-sm text-slate-300 group-hover:text-white">Projetos (Cases)</span>
+                </button>
+
+                <button @click="triggerAction('stack')"
+                    class="w-full text-left p-4 rounded-xl bg-white/5 hover:bg-nebula-blue/20 border border-white/5 hover:border-nebula-cyan/50 transition-all group flex items-center gap-3">
+                    <i data-lucide="cpu" class="w-5 h-5 text-nebula-purple group-hover:text-nebula-cyan transition"></i>
+                    <span class="text-sm text-slate-300 group-hover:text-white">Stack Tecnológica</span>
+                </button>
+
+                <button @click="triggerAction('contact')"
+                    class="w-full text-left p-4 rounded-xl bg-gradient-to-r from-nebula-purple/20 to-nebula-blue/20 border border-nebula-cyan/30 hover:border-nebula-cyan hover:shadow-neon transition-all group flex items-center gap-3 mt-4">
+                    <i data-lucide="zap" class="w-5 h-5 text-nebula-glow animate-pulse"></i>
+                    <span class="text-sm text-white font-bold tracking-wide">CONTRATAR AGORA</span>
+                </button>
+            </div>
+
+            <div class="mt-auto p-6 border-t border-white/5">
+                <div class="flex items-center gap-3 text-xs text-slate-400">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    Sistema Online • v2.4
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col relative">
+
+            <header
+                class="absolute top-0 w-full h-20 flex items-center justify-between px-6 z-20 glass-panel border-b border-white/5">
+                <div
+                    class="md:hidden font-orbit font-bold text-transparent bg-clip-text bg-gradient-to-r from-nebula-purple to-nebula-cyan">
+                    LUCAS.AI //
+                </div>
+                <div class="hidden md:block"></div> <a href="https://wa.me/SEU_NUMERO_REAL" target="_blank"
+                    class="flex items-center gap-2 bg-nebula-cyan/10 hover:bg-nebula-cyan/20 border border-nebula-cyan/50 text-nebula-cyan px-5 py-2 rounded-full font-orbit text-xs font-bold tracking-wider transition hover:shadow-neon">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+                </a>
+            </header>
+
+            <div ref="chatContainer" class="flex-1 overflow-y-auto px-4 pt-24 pb-40 scroll-smooth">
+                <div class="max-w-4xl mx-auto">
+
+                    <div v-if="messages.length === 0"
+                        class="flex flex-col items-center justify-center min-h-[60vh] text-center animate-fade-in">
+
+                        <div class="relative w-32 h-32 mb-8 group cursor-pointer animate-float">
+                            <div class="absolute inset-0 border border-nebula-purple/50 rounded-full animate-spin-slow"
+                                style="border-style: dashed;"></div>
+                            <div class="absolute inset-2 border border-nebula-cyan/50 rounded-full animate-spin-slow"
+                                style="animation-direction: reverse;"></div>
+                            <div class="absolute inset-0 bg-nebula-cyan/5 rounded-full blur-xl"></div>
+
+                            <div
+                                class="relative w-full h-full flex items-center justify-center rounded-full bg-void-900 border border-white/10 shadow-cosmic backdrop-blur-md">
+                                <i data-lucide="rocket" class="w-12 h-12 text-nebula-glow"></i>
+                            </div>
+                        </div>
+
+                        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 font-orbit tracking-tight">
+                            VOCÊ TEM 100 PROPOSTAS.<br>
+                            <span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-nebula-purple via-nebula-blue to-nebula-glow">POR
+                                QUE A MINHA?</span>
+                        </h2>
+
+                        <p class="text-slate-400 max-w-2xl mx-auto mb-12 text-lg leading-relaxed">
+                            A maioria vende linhas de código. Eu vendo <strong>Sistemas de Alta Performance</strong>,
+                            <strong>Segurança</strong> e <strong>Retorno sobre Investimento (ROI)</strong>.
+                            <br>Escolha seu diferencial:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+
+                            <button @click="triggerAction('why_architect')"
+                                class="group text-left p-6 rounded-2xl bg-void-900/50 border border-white/10 hover:border-nebula-purple/60 hover:bg-void-800 transition-all hover:-translate-y-1 hover:shadow-cosmic relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition"><i
+                                        data-lucide="box" class="w-16 h-16 text-nebula-purple"></i></div>
+                                <h3 class="font-orbit font-bold text-white mb-2 relative z-10">ARQUITETURA</h3>
+                                <p class="text-xs text-slate-400 relative z-10">Adeus "código espaguete". Crio sistemas
+                                    escaláveis e limpos.</p>
+                            </button>
+
+                            <button @click="triggerAction('why_business')"
+                                class="group text-left p-6 rounded-2xl bg-void-900/50 border border-white/10 hover:border-nebula-blue/60 hover:bg-void-800 transition-all hover:-translate-y-1 hover:shadow-cosmic relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition"><i
+                                        data-lucide="trending-up" class="w-16 h-16 text-nebula-blue"></i></div>
+                                <h3 class="font-orbit font-bold text-white mb-2 relative z-10">FOCO NO ROI</h3>
+                                <p class="text-xs text-slate-400 relative z-10">Não penso em features, penso em como o
+                                    software vai te dar lucro.</p>
+                            </button>
+
+                            <button @click="triggerAction('why_risk')"
+                                class="group text-left p-6 rounded-2xl bg-void-900/50 border border-white/10 hover:border-nebula-cyan/60 hover:bg-void-800 transition-all hover:-translate-y-1 hover:shadow-cosmic relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition"><i
+                                        data-lucide="shield-check" class="w-16 h-16 text-nebula-cyan"></i></div>
+                                <h3 class="font-orbit font-bold text-white mb-2 relative z-10">RISCO ZERO</h3>
+                                <p class="text-xs text-slate-400 relative z-10">Entregas semanais. Contrato claro. Sem
+                                    sumiços.</p>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div v-for="(msg, index) in messages" :key="index" class="mb-8 animate-fade-in group">
+
+                        <div v-if="msg.role === 'user'" class="flex flex-row-reverse gap-4">
+                            <div
+                                class="w-10 h-10 rounded-full bg-void-800 border border-white/10 flex items-center justify-center shrink-0">
+                                <i data-lucide="user" class="w-5 h-5 text-slate-400"></i>
+                            </div>
+                            <div
+                                class="glass-panel px-6 py-4 rounded-3xl rounded-tr-sm text-slate-200 text-sm max-w-[80%] border-white/10 shadow-lg">
+                                {{ msg.content }}
+                            </div>
+                        </div>
+
+                        <div v-if="msg.role === 'assistant'" class="flex gap-4 relative">
+                            <div
+                                class="absolute top-10 left-5 w-[1px] h-[calc(100%+2rem)] bg-gradient-to-b from-nebula-cyan/50 to-transparent -z-10 group-last:hidden">
+                            </div>
+
+                            <div
+                                class="w-10 h-10 rounded-full bg-void-950 border border-nebula-cyan shadow-neon flex items-center justify-center shrink-0 mt-1">
+                                <i data-lucide="bot" class="w-5 h-5 text-nebula-glow"></i>
+                            </div>
+
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <span
+                                        class="font-orbit font-bold text-transparent bg-clip-text bg-gradient-to-r from-nebula-purple to-nebula-cyan text-sm">LUCAS
+                                        AI</span>
+                                    <span
+                                        class="text-[10px] text-slate-600 border border-slate-800 px-1 rounded bg-void-900">SYSTEM_REPLY</span>
+                                </div>
+
+                                <div class="prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed mb-4"
+                                    v-html="renderMarkdown(msg.content)"></div>
+
+                                <div v-if="msg.projectCard"
+                                    class="mt-4 max-w-md bg-void-900/80 border border-nebula-cyan/30 rounded-xl overflow-hidden relative group cursor-pointer hover:border-nebula-cyan hover:shadow-neon transition-all">
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-b from-transparent via-nebula-cyan/10 to-transparent h-[200%] w-full animate-[float_3s_linear_infinite] opacity-0 group-hover:opacity-100 pointer-events-none">
+                                    </div>
+
+                                    <div
+                                        class="h-32 bg-void-950 relative flex items-center justify-center overflow-hidden border-b border-white/5">
+                                        <div class="absolute inset-0 bg-cosmic-gradient opacity-20"></div>
+                                        <i data-lucide="database"
+                                            class="w-12 h-12 text-nebula-cyan/50 group-hover:text-nebula-glow transition duration-500"></i>
+                                    </div>
+                                    <div class="p-5 relative z-10">
+                                        <h4 class="font-orbit font-bold text-white text-lg flex items-center gap-2">
+                                            {{ msg.projectCard.title }}
+                                        </h4>
+                                        <div class="flex flex-wrap gap-2 my-3">
+                                            <span v-for="tech in msg.projectCard.tech.split(', ')"
+                                                class="text-[10px] uppercase font-bold text-nebula-cyan bg-nebula-cyan/10 px-2 py-1 rounded border border-nebula-cyan/20">{{
+                                                tech }}</span>
+                                        </div>
+                                        <p class="text-xs text-slate-400 mb-4">{{ msg.projectCard.desc }}</p>
+                                        <button
+                                            class="w-full py-2 bg-nebula-cyan/10 border border-nebula-cyan/30 text-nebula-cyan font-bold font-orbit text-xs rounded hover:bg-nebula-cyan hover:text-void-950 transition flex items-center justify-center gap-2">
+                                            <i data-lucide="eye" class="w-3 h-3"></i> VER DEMO
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="isLoading"
+                        class="ml-14 flex items-center gap-2 text-nebula-cyan/50 text-xs font-orbit animate-pulse">
+                        <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+                        PROCESSANDO DADOS...
+                    </div>
+
+                </div>
+            </div>
+
+            <div
+                class="absolute bottom-0 w-full p-4 bg-gradient-to-t from-void-950 via-void-950 to-transparent pt-20 z-30">
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-0.5 bg-gradient-to-r from-nebula-purple to-nebula-cyan rounded-xl opacity-30 group-hover:opacity-70 transition blur">
+                        </div>
+                        <div
+                            class="relative flex items-center bg-void-900 rounded-xl border border-white/10 p-2 shadow-2xl">
+                            <div class="px-3 text-nebula-cyan"><i data-lucide="terminal" class="w-5 h-5"></i></div>
+                            <input v-model="input" @keydown.enter.prevent="sendMessage"
+                                placeholder="Digite sua pergunta ou escolha uma opção acima..."
+                                class="flex-1 bg-transparent text-white placeholder-slate-600 focus:outline-none py-3 font-mono text-sm"
+                                autocomplete="off">
+                            <button @click="sendMessage" :disabled="!input.trim() || isLoading"
+                                class="p-3 bg-white/5 hover:bg-nebula-cyan/20 hover:text-nebula-cyan text-slate-400 rounded-lg transition disabled:opacity-30">
+                                <i data-lucide="send-horizonal" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center mt-2">
+                        <span class="text-[10px] text-slate-600 font-orbit uppercase tracking-widest">Lucas AI System •
+                            Online</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    input: '',
+                    messages: [],
+                    isLoading: false,
+                }
+            },
+            mounted() {
+                lucide.createIcons();
+            },
+            updated() {
+                lucide.createIcons();
+            },
+            methods: {
+                triggerAction(type) {
+                    let text = "";
+                    // COMANDOS DE VENDAS
+                    if (type === 'why_architect') text = "O que é esse diferencial de 'Arquitetura' e por que importa?";
+                    if (type === 'why_business') text = "Como você foca no ROI e no lucro do meu negócio?";
+                    if (type === 'why_risk') text = "Como você garante Risco Zero e cumprimento de prazos?";
+
+                    // COMANDOS GERAIS
+                    if (type === 'portfolio') text = "Quero ver provas. Mostre um projeto complexo.";
+                    if (type === 'stack') text = "Quais tecnologias você usa? É algo moderno?";
+                    if (type === 'contact') text = "Estou convencido. Como iniciamos?";
+
+                    this.input = text;
+                    this.sendMessage();
+                },
+
+                async sendMessage() {
+                    if (!this.input.trim() || this.isLoading) return;
+
+                    const userText = this.input;
+                    this.input = '';
+                    this.messages.push({ role: 'user', content: userText });
+                    this.scrollToBottom();
+
+                    this.isLoading = true;
+
+                    // CÉREBRO DO BOT (Lógica de Respostas)
+                    setTimeout(async () => {
+                        this.isLoading = false;
+                        let botResponse = { role: 'assistant', content: '', projectCard: null };
+                        const lowerText = userText.toLowerCase();
+
+                        // 1. RESPOSTA DE ARQUITETO
+                        if (lowerText.includes('arquiteto') || lowerText.includes('diferencial')) {
+                            botResponse.content = "A diferença é simples: **Amadores escrevem código, Profissionais desenham sistemas.**\n\n90% das propostas que você recebeu vão entregar um 'código espaguete' que quebra em 6 meses. Eu entrego:\n\n* **Escalabilidade:** O sistema aguenta 10 ou 100.000 usuários.\n* **Manutenibilidade:** Código limpo que qualquer dev entende.\n* **Segurança:** Blindagem contra falhas comuns.\n\nEu vendo tranquilidade técnica a longo prazo.";
+                        }
+                        // 2. RESPOSTA DE ROI / BUSINESS
+                        else if (lowerText.includes('roi') || lowerText.includes('lucro') || lowerText.includes('negócio')) {
+                            botResponse.content = "Desenvolvedores comuns pensam em features. Eu penso em **conversão**.\n\nMinha abordagem foca em:\n1.  **Performance:** 1s a menos no carregamento = +20% de vendas.\n2.  **UX Otimizada:** Redução de atrito para o usuário finalizar a compra.\n3.  **Analytics:** Integração nativa para você medir tudo.\n\nEu não sou apenas um dev, sou um parceiro estratégico.";
+                        }
+                        // 3. RESPOSTA DE RISCO
+                        else if (lowerText.includes('risco') || lowerText.includes('prazo') || lowerText.includes('garante')) {
+                            botResponse.content = "**Freelancers somem. Agências são lentas. Eu sou o equilíbrio.**\n\nMinha metodologia elimina o risco para você:\n* **Sprints Semanais:** Você vê o progresso toda sexta-feira.\n* **Contrato Blindado:** Escopo e prazos travados legalmente.\n* **Garantia de Bug:** 30 dias de suporte gratuito pós-entrega.\n\nO risco está todo do meu lado.";
+                        }
+                        // 4. PORTFOLIO
+                        else if (lowerText.includes('projeto') || lowerText.includes('provas') || lowerText.includes('portfolio')) {
+                            botResponse.content = "Falar é barato. Veja o que eu construo (Sistemas reais, não sites estáticos):";
+                            botResponse.projectCard = {
+                                title: "Orion SaaS Platform",
+                                tech: "Vue.js 3, Node.js, AWS, PostgreSQL",
+                                desc: "Plataforma completa de gestão com Dashboard em Tempo Real, Pagamentos via Stripe e Arquitetura Serverless."
+                            };
+                        }
+                        // 5. STACK
+                        else if (lowerText.includes('tecnologia') || lowerText.includes('stack')) {
+                            botResponse.content = "Eu utilizo a **Stack das Startups do Vale do Silício**. Tecnologia testada e validada pelo mercado:\n\n* **Frontend:** Vue.js ou React (Interatividade total).\n* **Backend:** Node.js ou Python (Velocidade).\n* **Cloud:** AWS/Google Cloud (Segurança).\n\nNada de tecnologias ultrapassadas que vão te dar dor de cabeça no futuro.";
+                        }
+                        // 6. CONTATO
+                        else if (lowerText.includes('iniciamos') || lowerText.includes('contato') || lowerText.includes('contratar')) {
+                            botResponse.content = "Excelente decisão. Dado o nível de personalização que ofereço, preciso de uma conversa rápida para entender seu escopo.\n\n**Vamos pular a burocracia?**\n\n[> CLIQUE AQUI PARA ME CHAMAR NO WHATSAPP <](https://wa.me/SEU_NUMERO_REAL)\n\n*Se eu não responder em 15 minutos, te dou 5% de desconto no setup.*";
+                        }
+                        // FALLBACK
+                        else {
+                            botResponse.content = "Entendido. Como sua IA de Arquitetura de Software, estou aqui para provar por que sou a escolha certa. Pode perguntar sobre meus **Projetos**, **Metodologia** ou **Stack**.";
+                        }
+
+                        // EFEITO DE DIGITAÇÃO
+                        this.messages.push({ role: 'assistant', content: '', projectCard: botResponse.projectCard });
+                        const botMsgIndex = this.messages.length - 1;
+
+                        const chunks = botResponse.content.split('');
+                        for (let i = 0; i < chunks.length; i++) {
+                            await new Promise(r => setTimeout(r, 15));
+                            this.messages[botMsgIndex].content += chunks[i];
+                            this.scrollToBottom();
+                        }
+
+                    }, 1000);
+                },
+
+                renderMarkdown(text) {
+                    return marked.parse(text);
+                },
+
+                scrollToBottom() {
+                    this.$nextTick(() => {
+                        const container = this.$refs.chatContainer;
+                        container.scrollTop = container.scrollHeight;
+                    });
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
