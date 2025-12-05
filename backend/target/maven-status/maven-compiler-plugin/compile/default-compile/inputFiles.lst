@@ -1,12 +1,13 @@
-C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\PortfolioApplication.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\repository\SystemInfoRepository.java
-C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\controller\ChatController.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\Message.java
-C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\SystemInfo.java
-C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\repository\MessageRepository.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\ChatResponse.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\repository\ProjectRepository.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\config\DataSeeder.java
+C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\PortfolioApplication.java
+C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\controller\ChatController.java
+C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\SystemInfo.java
+C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\repository\MessageRepository.java
+C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\config\WebConfig.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\ChatRequest.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\service\ChatService.java
 C:\atendente-portifolio\backend\src\main\java\com\lucasdev\portfolio\model\Project.java
