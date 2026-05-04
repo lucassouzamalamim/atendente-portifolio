@@ -1,20 +1,20 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Header: React.FC = () => {
     return (
-        <header className="absolute top-0 w-full h-20 flex items-center justify-between px-6 z-20 glass-panel border-b border-white/5">
-            <div className="md:hidden font-orbit font-bold text-transparent bg-clip-text bg-gradient-to-r from-nebula-purple to-nebula-cyan">
-                LUCAS.AI //
-            </div>
-            <div className="hidden md:block"></div>
+        <header className="absolute top-0 z-20 flex h-16 w-full items-center justify-between px-4 sm:px-6">
+            <Logo compact />
+
             <a
                 href="https://wa.me/5542999839219"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 bg-nebula-cyan/10 hover:bg-nebula-cyan/20 border border-nebula-cyan/50 text-nebula-cyan px-5 py-2 rounded-full font-orbit text-xs font-bold tracking-wider transition hover:shadow-neon"
+                className="inline-flex items-center gap-2 rounded-full border border-cyan-300/25 bg-white/8 px-4 py-2 text-sm font-semibold text-cyan-100 shadow-sm backdrop-blur transition hover:bg-white/12"
             >
-                <MessageCircle className="w-4 h-4" /> WhatsApp
+                <MessageCircle className="h-4 w-4" />
+                WhatsApp
             </a>
         </header>
     );

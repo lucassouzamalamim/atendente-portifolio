@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Terminal, SendHorizontal } from 'lucide-react';
+import { SendHorizontal } from 'lucide-react';
 
 interface InputAreaProps {
     onSend: (text: string) => void;
@@ -23,31 +23,30 @@ export const InputArea: React.FC<InputAreaProps> = ({ onSend, isLoading }) => {
     };
 
     return (
-        <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-void-950 via-void-950 to-transparent pt-20 z-30">
-            <div className="max-w-4xl mx-auto">
-                <div className="relative group">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-nebula-purple to-nebula-cyan rounded-xl opacity-30 group-hover:opacity-70 transition blur"></div>
-                    <div className="relative flex items-center bg-void-900 rounded-xl border border-white/10 p-2 shadow-2xl">
-                        <div className="px-3 text-nebula-cyan"><Terminal className="w-5 h-5" /></div>
+        <div className="absolute bottom-0 z-30 w-full bg-gradient-to-t from-[#050b14] via-[#050b14]/95 to-transparent px-4 pb-4 pt-14 sm:px-6">
+            <div className="mx-auto max-w-4xl">
+                <div className="rounded-3xl border border-cyan-300/15 bg-white/7 p-2 shadow-xl shadow-slate-950/20 backdrop-blur-xl">
+                    <div className="flex items-center gap-2">
                         <input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
-                            placeholder="Digite sua pergunta ou escolha uma opção acima..."
-                            className="flex-1 bg-transparent text-white placeholder-slate-600 focus:outline-none py-3 font-mono text-sm"
+                            placeholder="Descreva seu projeto, desafio ou ideia..."
+                            className="min-w-0 flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none"
                             autoComplete="off"
                         />
                         <button
                             onClick={handleSend}
                             disabled={!input.trim() || isLoading}
-                            className="p-3 bg-white/5 hover:bg-nebula-cyan/20 hover:text-nebula-cyan text-slate-400 rounded-lg transition disabled:opacity-30"
+                            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-400 text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-slate-500"
+                            aria-label="Enviar mensagem"
                         >
-                            <SendHorizontal className="w-5 h-5" />
+                            <SendHorizontal className="h-5 w-5" />
                         </button>
                     </div>
                 </div>
-                <div className="text-center mt-2">
-                    <span className="text-[10px] text-slate-600 font-orbit uppercase tracking-widest">Lucas AI System • Online</span>
+                <div className="mt-2 text-center">
+                    <span className="text-xs text-slate-500">Resposta inicial automatizada. Projetos avançam para conversa direta no WhatsApp.</span>
                 </div>
             </div>
         </div>

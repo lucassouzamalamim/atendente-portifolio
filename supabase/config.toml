@@ -1,0 +1,7 @@
+project_id = "ubvlrurllkxbgcfgvkdv"
+
+[functions.chat]
+verify_jwt = false
+
+[functions.realtime-token]
+verify_jwt = true

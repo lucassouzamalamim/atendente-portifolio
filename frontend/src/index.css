@@ -1,12 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Scrollbar Stealth */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #07111e;
+}
+
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -14,79 +29,150 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3b82f6;
-  border-radius: 10px;
+  background: rgba(34, 211, 238, 0.32);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
-}
-
-/* Estilos Markdown */
-.prose strong {
-  color: #00f0ff;
-  font-weight: 700;
-}
-
-.prose ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.prose li::before {
-  content: "▹";
-  color: #a855f7;
-  margin-right: 8px;
+  background: rgba(34, 211, 238, 0.5);
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 .prose p {
-  margin-bottom: 0.8rem;
-  line-height: 1.6;
-  color: #e2e8f0;
+  margin: 0 0 0.85rem;
 }
 
-/* Animação de Estrelas (CSS Puro) */
-.stars-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
+.prose p:last-child {
+  margin-bottom: 0;
 }
 
-.stars {
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow: 100px 200px #FFF, 400px 500px #FFF, 700px 100px #FFF, 900px 800px #FFF, 200px 600px #FFF;
-  animation: animStar 100s linear infinite;
+.prose strong {
+  color: #ffffff;
+  font-weight: 700;
 }
 
-.stars2 {
-  width: 2px;
-  height: 2px;
-  background: transparent;
-  box-shadow: 200px 300px #FFF, 500px 100px #FFF, 800px 600px #FFF;
-  animation: animStar 150s linear infinite;
+.prose ul,
+.prose ol {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
 }
 
-@keyframes animStar {
-  from {
-    transform: translateY(0px);
+.prose li {
+  margin: 0.35rem 0;
+}
+
+.prose a:not([class]) {
+  color: #67e8f9;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.prose a:not([class]):hover {
+  color: #a5f3fc;
+}
+
+.voice-ring {
+  position: absolute;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 999px;
+}
+
+.voice-ring.is-speaking {
+  animation: voice-ring 1.45s ease-out infinite;
+}
+
+.voice-ring-delay.is-speaking {
+  animation-delay: 0.35s;
+}
+
+.voice-glow {
+  position: absolute;
+  width: 118px;
+  height: 118px;
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.12);
+  filter: blur(18px);
+  opacity: 0;
+}
+
+.voice-glow.is-speaking {
+  animation: voice-glow 0.9s ease-in-out infinite;
+}
+
+.voice-bars {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+}
+
+.voice-bars span {
+  width: 5px;
+  border-radius: 999px;
+  background: #06111d;
+  animation: voice-bar 0.72s ease-in-out infinite;
+}
+
+.voice-bars span:nth-child(1) {
+  height: 16px;
+  animation-delay: 0s;
+}
+
+.voice-bars span:nth-child(2) {
+  height: 28px;
+  animation-delay: 0.12s;
+}
+
+.voice-bars span:nth-child(3) {
+  height: 22px;
+  animation-delay: 0.24s;
+}
+
+.voice-bars span:nth-child(4) {
+  height: 30px;
+  animation-delay: 0.36s;
+}
+
+@keyframes voice-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.88);
   }
 
-  to {
-    transform: translateY(-2000px);
+  70% {
+    opacity: 0.2;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
   }
 }
 
-/* Vidro Holográfico */
-.glass-panel {
-  background: rgba(15, 12, 25, 0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+@keyframes voice-bar {
+  0%,
+  100% {
+    transform: scaleY(0.55);
+  }
+
+  50% {
+    transform: scaleY(1.15);
+  }
+}
+
+@keyframes voice-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.16);
+  }
 }
